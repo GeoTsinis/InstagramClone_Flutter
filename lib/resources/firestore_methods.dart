@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  //upload post
+  //UPLOAD POST FUNC
   Future<String> upoloadPost(String description, Uint8List file, String uid,
       String username, String profileImage) async {
     String res = 'Some error occured';
@@ -37,6 +37,7 @@ class FirestoreMethods {
     return res;
   }
 
+  //LIKING POST FUNC
   Future<void> likePost(String postId, String uid, List likes) async {
     try {
       if (likes.contains(uid)) {
@@ -53,6 +54,7 @@ class FirestoreMethods {
     }
   }
 
+  //POST A COMMENT FUNC
   Future<void> postComment(String postId, String text, String uid, String name,
       String profilePic) async {
     try {
@@ -76,6 +78,15 @@ class FirestoreMethods {
       }
     } catch (err) {
       print(err.toString());
+    }
+  }
+
+  //DELETE POST FUNC
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
